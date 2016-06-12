@@ -10,7 +10,7 @@ MadgwickAHRS should be used via [Carthage dependency manager](https://github.com
 
 #### Add MadgwickAHRS to your Cartfile
 
-```github "Softwarenerd/MadgwickAHRS"```
+```github "softwarenerd/MadgwickAHRS"```
 
 #### Add MadgwickAHRS.framework to Linked Frameworks and Libraries
 
