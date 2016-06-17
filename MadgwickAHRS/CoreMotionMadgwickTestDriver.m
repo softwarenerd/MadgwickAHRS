@@ -105,9 +105,9 @@ void CalculateEulerAnglesFromQuaternion(float q0, float q1, float q2, float q3, 
         [_madgwickSensorFusion updateWithGyroscopeX:(float)[motion rotationRate].x
                                          gyroscopeY:(float)[motion rotationRate].y
                                          gyroscopeZ:(float)[motion rotationRate].z
-                                     accelerometerX:(float)[motion gravity].x
-                                     accelerometerY:(float)[motion gravity].y
-                                     accelerometerZ:(float)[motion gravity].z
+                                     accelerometerX:(float)[motion gravity].x * -1.0f
+                                     accelerometerY:(float)[motion gravity].y * -1.0f
+                                     accelerometerZ:(float)[motion gravity].z * -1.0f
                                       magnetometerX:(float)[motion magneticField].field.x
                                       magnetometerY:(float)[motion magneticField].field.y
                                       magnetometerZ:(float)[motion magneticField].field.z];
