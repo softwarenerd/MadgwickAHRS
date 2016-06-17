@@ -33,26 +33,26 @@ void CalculateEulerAnglesFromQuaternion(float q0, float q1, float q2, float q3, 
     const float z2 = q3 * q3;
     const float unitLength = w2 + x2 + y2 + z2;     // Normalised == 1, otherwise correction divisor.
     const float abcd = q0 * q1 + q2 * q3;
-    const float eps = 1e-7;                         // TODO: pick from your math lib instead of hardcoding.
-    if (abcd > (0.5-eps) * unitLength)
+    const float eps = 1e-7f;                        // TODO: pick from your math lib instead of hardcoding.
+    if (abcd > (0.5f - eps) * unitLength)
     {
-        *roll = 0;
-        *pitch = M_PI;
-        *yaw = 2.0f * atan2(q2, q0);
+        *roll = 0.0f;
+        *pitch = (float)M_PI;
+        *yaw = 2.0f * atan2f(q2, q0);
     }
-    else if (abcd < (-0.5 + eps) * unitLength)
+    else if (abcd < (-0.5f + eps) * unitLength)
     {
-        *roll  = 0;
-        *pitch = -M_PI;
+        *roll  = 0.0f;
+        *pitch = (float)-M_PI;
         *yaw   = -2.0f * atan2(q2, q0);
     }
     else
     {
         const float adbc = q0 * q3 - q1 * q2;
         const float acbd = q0 * q2 - q1 * q3;
-        *roll  = atan2(2.0f * acbd, 1.0f - 2.0f * (y2 + x2));
-        *pitch = asin(2.0f * abcd / unitLength);
-        *yaw   = atan2(2.0f * adbc, 1.0f - 2.0f * (z2 + x2));
+        *roll  = atan2f(2.0f * acbd, 1.0f - 2.0f * (y2 + x2));
+        *pitch = asinf(2.0f * abcd / unitLength);
+        *yaw   = atan2f(2.0f * adbc, 1.0f - 2.0f * (z2 + x2));
     }
 }
 
@@ -128,12 +128,12 @@ void CalculateEulerAnglesFromQuaternion(float q0, float q1, float q2, float q3, 
                                            &pitch,
                                            &yaw);
         roll = NormalizeAngle(RadiansToDegrees(roll));
-        pitch = NormalizeAngle(RadiansToDegrees(pitch));
+        pitch = RadiansToDegrees(pitch);
         yaw = NormalizeAngle(RadiansToDegrees(yaw));
         
         // Obtain CoreMotion roll, pitch and yaw for comparison logging below.
         float coreMotionRoll = NormalizeAngle(RadiansToDegrees([[motion attitude] roll]));
-        float coreMotionPitch = NormalizeAngle(RadiansToDegrees([[motion attitude] pitch]));
+        float coreMotionPitch = RadiansToDegrees([[motion attitude] pitch]);
         float coreMotionYaw = NormalizeAngle(RadiansToDegrees([[motion attitude] yaw]));
         
         // Notify the delegate.
