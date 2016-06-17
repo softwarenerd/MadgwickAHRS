@@ -12,16 +12,10 @@
 #import "CoreMotionMadgwickTestDriver.h"
 #import "MadgwickSensorFusion.h"
 
-// Normalizes.
-float NormalizeAngle(float angle)
-{
-    return fmodf(angle + 360.0f, 360.0f);
-}
-
 // Converts radians to degrees.
 static inline float RadiansToDegrees(float radians)
 {
-    return radians * 180.0f / M_PI;
+    return radians * 180.0f / (float)M_PI;
 }
 
 // Calculates Euler angles from quaternion.
@@ -111,9 +105,9 @@ void CalculateEulerAnglesFromQuaternion(float q0, float q1, float q2, float q3, 
         [_madgwickSensorFusion updateWithGyroscopeX:(float)[motion rotationRate].x
                                          gyroscopeY:(float)[motion rotationRate].y
                                          gyroscopeZ:(float)[motion rotationRate].z
-                                     accelerometerX:(float)[motion gravity].x * -1.0f
-                                     accelerometerY:(float)[motion gravity].y * -1.0f
-                                     accelerometerZ:(float)[motion gravity].z * -1.0f
+                                     accelerometerX:(float)[motion gravity].x
+                                     accelerometerY:(float)[motion gravity].y
+                                     accelerometerZ:(float)[motion gravity].z
                                       magnetometerX:(float)[motion magneticField].field.x
                                       magnetometerY:(float)[motion magneticField].field.y
                                       magnetometerZ:(float)[motion magneticField].field.z];
@@ -127,9 +121,9 @@ void CalculateEulerAnglesFromQuaternion(float q0, float q1, float q2, float q3, 
                                            &roll,
                                            &pitch,
                                            &yaw);
-        roll = NormalizeAngle(RadiansToDegrees(roll));
+        roll = RadiansToDegrees(roll);
         pitch = RadiansToDegrees(pitch);
-        yaw = NormalizeAngle(RadiansToDegrees(yaw));
+        yaw = RadiansToDegrees(yaw);
         
         // Obtain CoreMotion roll, pitch and yaw for comparison logging below.
         float coreMotionRoll = RadiansToDegrees([[motion attitude] roll]);
