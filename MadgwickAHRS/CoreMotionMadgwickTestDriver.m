@@ -132,9 +132,9 @@ void CalculateEulerAnglesFromQuaternion(float q0, float q1, float q2, float q3, 
         yaw = NormalizeAngle(RadiansToDegrees(yaw));
         
         // Obtain CoreMotion roll, pitch and yaw for comparison logging below.
-        float coreMotionRoll = NormalizeAngle(RadiansToDegrees([[motion attitude] roll]));
+        float coreMotionRoll = RadiansToDegrees([[motion attitude] roll]);
         float coreMotionPitch = RadiansToDegrees([[motion attitude] pitch]);
-        float coreMotionYaw = NormalizeAngle(RadiansToDegrees([[motion attitude] yaw]));
+        float coreMotionYaw = RadiansToDegrees([[motion attitude] yaw]);
         
         // Notify the delegate.
         if ([[self delegate] respondsToSelector:@selector(coreMotionMadgwickTestDriver:
